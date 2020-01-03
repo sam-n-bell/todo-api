@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TASKS", schema = "todos" )
+@Table(name="tasks", schema = "todos" )
 public class Task implements Serializable{
 
 
@@ -25,23 +25,26 @@ public class Task implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "TASK_ID", nullable = false)
-	private long task_id;
-	@Column(name = "DESCRIPTION", nullable = false)
+	@Column(name = "id", nullable = false)
+	private long id;
+	@Column(name = "description", nullable = false)
 	private String description;
-	@Column(name = "DUE_DATE", nullable = false)
+	@Column(name = "due_date", nullable = false)
 	private Date due_date;
+	
+	
+	
 	/**
-	 * @return the task_id
+	 * @return the id
 	 */
-	public long getTask_id() {
-		return task_id;
+	public long getId() {
+		return id;
 	}
 	/**
-	 * @param task_id the task_id to set
+	 * @param id the id to set
 	 */
-	public void setTask_id(long task_id) {
-		this.task_id = task_id;
+	public void setId(long id) {
+		this.id = id;
 	}
 	/**
 	 * @return the description
