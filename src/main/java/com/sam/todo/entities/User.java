@@ -1,13 +1,19 @@
 package com.sam.todo.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="USERS", schema="todos")
@@ -21,23 +27,29 @@ public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "USER_ID", nullable = false)
-	private long user_id;
-	@Column(name = "PASSWORD", nullable = false)
+	@Column(name = "id", nullable = false)
+	private long id;
+	
+	@Column(name = "password", nullable = false)
 	private String password;
-	@Column(name = "EMAIL", nullable = false)
+	
+	@Column(name = "email", nullable = false)
 	private String email;
+	
+	@OneToMany(mappedBy = "user") //one user to many tasks
+	private List<Task> tasks;
+	
 	/**
-	 * @return the user_id
+	 * @return the id
 	 */
-	public long getUser_id() {
-		return user_id;
+	public long getId() {
+		return id;
 	}
 	/**
 	 * @param user_id the user_id to set
 	 */
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public void setId(long id) {
+		this.id = id;
 	}
 	/**
 	 * @return the password

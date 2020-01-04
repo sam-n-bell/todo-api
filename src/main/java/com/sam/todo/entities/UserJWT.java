@@ -23,19 +23,19 @@ public class UserJWT implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "JWT_ID", nullable = false)
+	@Column(name = "jwt_id", nullable = false)
 	private Long jwt_id;
 	
-	@Column(name = "JWT", nullable = false)
+	@Column(name = "jwt", nullable = false)
 	private String jwt;
 	
-	@Column(name = "USER_ID", nullable = false)
+	@Column(name = "user_id", nullable = false)
 	private Long user_id;
 	
-	@Column(name = "DATE_ISSUED", nullable = false)
+	@Column(name = "date_issued", nullable = false)
 	private Date date_issue;
 	
-	@Column(name = "EXPIRED", nullable = false)
+	@Column(name = "expired", nullable = false)
 	@Type(type="yes_no")
 	private boolean expired;
 

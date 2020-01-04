@@ -38,6 +38,11 @@ public class TaskController {
 		return taskRepository.findById(id);
 	}
 	
+	@GetMapping(value = "/user/{id}")
+	public List<Task> findByUserId(@PathVariable final long id) {
+		return taskRepository.findByUserId(id);
+	}
+	
 	@PostMapping
 	public Task addTask(@RequestBody final Task task) {
 		taskRepository.save(task);

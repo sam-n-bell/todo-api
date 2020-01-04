@@ -8,7 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.core.sym.Name;
 
 @Entity
 @Table(name="tasks", schema = "todos" )
@@ -23,15 +27,18 @@ public class Task implements Serializable{
 	 * 
 	 */
 	
+	@ManyToOne //many tasks to one user
+	@JoinColumn(name="user_id")
+	private User user;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
+	@Column(name = "id", nullable = false) //name is the name in the table itself
 	private long id;
 	@Column(name = "description", nullable = false)
 	private String description;
 	@Column(name = "due_date", nullable = false)
 	private Date due_date;
-	
 	
 	
 	/**
