@@ -33,11 +33,52 @@ public class User implements Serializable{
 	@Column(name = "password", nullable = false)
 	private String password;
 	
-	@Column(name = "email", nullable = false)
-	private String email;
+	@Column(name = "username", nullable = false)
+	private String username;
 	
 	@OneToMany(mappedBy = "user") //one user to many tasks
 	private List<Task> tasks;
+	
+	@OneToMany(mappedBy = "user") //one user to many tokens
+	private List<UserJWT> jwts; 
+	
+	/**
+	 * @return the jwts
+	 */
+	public List<UserJWT> getJwts() {
+		return jwts;
+	}
+	/**
+	 * @param jwts the jwts to set
+	 */
+	public void setJwts(List<UserJWT> jwts) {
+		this.jwts = jwts;
+	}
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	/**
+	 * @return the tasks
+	 */
+	public List<Task> getTasks() {
+		return tasks;
+	}
+	/**
+	 * @param tasks the tasks to set
+	 */
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
 	
 	/**
 	 * @return the id
@@ -62,18 +103,6 @@ public class User implements Serializable{
 	 */
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	/**
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
-	}
-	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	@Override
 	public int hashCode() {

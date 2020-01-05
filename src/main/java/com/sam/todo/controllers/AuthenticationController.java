@@ -37,7 +37,7 @@ public class AuthenticationController {
 	
 	@PostMapping({"/register"})
 	public ResponseEntity<?> createUser(@RequestBody final User user) {
-		User existingUser = userRepository.findByEmail(user.getEmail());
+		User existingUser = userRepository.findByUsername(user.getUsername());
 		if (existingUser != null) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		} else {

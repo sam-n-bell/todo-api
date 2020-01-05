@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
@@ -23,14 +25,11 @@ public class UserJWT implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "jwt_id", nullable = false)
-	private Long jwt_id;
+	@Column(name = "id", nullable = false)
+	private Long id;
 	
 	@Column(name = "jwt", nullable = false)
 	private String jwt;
-	
-	@Column(name = "user_id", nullable = false)
-	private Long user_id;
 	
 	@Column(name = "date_issued", nullable = false)
 	private Date date_issue;
@@ -39,18 +38,36 @@ public class UserJWT implements Serializable{
 	@Type(type="yes_no")
 	private boolean expired;
 
+	@ManyToOne //many tokens to one user
+	@JoinColumn(name="user_id")
+	private User user;
+
 	/**
-	 * @return the jwt_id
+	 * @return the id
 	 */
-	public Long getJwt_id() {
-		return jwt_id;
+	public Long getId() {
+		return id;
 	}
 
 	/**
-	 * @param jwt_id the jwt_id to set
+	 * @param id the id to set
 	 */
-	public void setJwt_id(Long jwt_id) {
-		this.jwt_id = jwt_id;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**
@@ -65,20 +82,6 @@ public class UserJWT implements Serializable{
 	 */
 	public void setJwt(String jwt) {
 		this.jwt = jwt;
-	}
-
-	/**
-	 * @return the user_id
-	 */
-	public Long getUser_id() {
-		return user_id;
-	}
-
-	/**
-	 * @param user_id the user_id to set
-	 */
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
 	}
 
 	/**
