@@ -40,7 +40,7 @@ public class UserJWT implements Serializable{
 
 	@ManyToOne //many tokens to one user
 	@JoinColumn(name="user_id")
-	private User user;
+	private ApplicationUser user;
 
 	/**
 	 * @return the id
@@ -59,14 +59,14 @@ public class UserJWT implements Serializable{
 	/**
 	 * @return the user
 	 */
-	public User getUser() {
+	public ApplicationUser getUser() {
 		return user;
 	}
 
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(User user) {
+	public void setUser(ApplicationUser user) {
 		this.user = user;
 	}
 

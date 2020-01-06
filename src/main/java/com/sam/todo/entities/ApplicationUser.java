@@ -16,8 +16,8 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="USERS", schema="todos")
-public class User implements Serializable{
+@Table(name="APP_USERS", schema="todos")
+public class ApplicationUser implements Serializable{
 
 
 	/**

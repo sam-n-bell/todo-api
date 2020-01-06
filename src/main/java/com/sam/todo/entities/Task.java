@@ -29,7 +29,7 @@ public class Task implements Serializable{
 	
 	@ManyToOne //many tasks to one user
 	@JoinColumn(name="user_id")
-	private User user;
+	private ApplicationUser user;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
