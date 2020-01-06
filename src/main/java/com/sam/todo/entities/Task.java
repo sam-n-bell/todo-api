@@ -12,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.core.sym.Name;
-
 @Entity
 @Table(name="tasks", schema = "todos" )
 public class Task implements Serializable{
@@ -29,7 +27,7 @@ public class Task implements Serializable{
 	
 	@ManyToOne //many tasks to one user
 	@JoinColumn(name="user_id")
-	private ApplicationUser user;
+	private ApplicationUser applicationUser;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +37,34 @@ public class Task implements Serializable{
 	private String description;
 	@Column(name = "due_date", nullable = false)
 	private Date due_date;
+	@Column(name = "priority", nullable = false)
+	private String priority;
 	
 	
+	/**
+	 * @return the applicationUser
+	 */
+	public ApplicationUser getApplicationUser() {
+		return applicationUser;
+	}
+	/**
+	 * @param applicationUser the applicationUser to set
+	 */
+	public void setApplicationUser(ApplicationUser applicationUser) {
+		this.applicationUser = applicationUser;
+	}
+	/**
+	 * @return the priority
+	 */
+	public String getPriority() {
+		return priority;
+	}
+	/**
+	 * @param priority the priority to set
+	 */
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
 	/**
 	 * @return the id
 	 */

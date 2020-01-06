@@ -3,16 +3,15 @@ package com.sam.todo.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -36,24 +35,24 @@ public class ApplicationUser implements Serializable{
 	@Column(name = "username", nullable = false)
 	private String username;
 	
-	@OneToMany(mappedBy = "user") //one user to many tasks
-	private List<Task> tasks;
-	
-	@OneToMany(mappedBy = "user") //one user to many tokens
-	private List<UserJWT> jwts; 
+//	@OneToMany(mappedBy = "applicationUser") //one user to many tasks
+//	private List<Task> tasks;
+//	
+//	@OneToMany(mappedBy = "applicationUser") //one user to many tokens
+//	private List<UserJWT> jwts; 
 	
 	/**
 	 * @return the jwts
 	 */
-	public List<UserJWT> getJwts() {
-		return jwts;
-	}
-	/**
-	 * @param jwts the jwts to set
-	 */
-	public void setJwts(List<UserJWT> jwts) {
-		this.jwts = jwts;
-	}
+//	public List<UserJWT> getJwts() {
+//		return jwts;
+//	}
+//	/**
+//	 * @param jwts the jwts to set
+//	 */
+//	public void setJwts(List<UserJWT> jwts) {
+//		this.jwts = jwts;
+//	}
 	/**
 	 * @return the username
 	 */
@@ -69,15 +68,15 @@ public class ApplicationUser implements Serializable{
 	/**
 	 * @return the tasks
 	 */
-	public List<Task> getTasks() {
-		return tasks;
-	}
-	/**
-	 * @param tasks the tasks to set
-	 */
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
-	}
+//	public List<Task> getTasks() {
+//		return tasks;
+//	}
+//	/**
+//	 * @param tasks the tasks to set
+//	 */
+//	public void setTasks(List<Task> tasks) {
+//		this.tasks = tasks;
+//	}
 
 	
 	/**
@@ -95,6 +94,7 @@ public class ApplicationUser implements Serializable{
 	/**
 	 * @return the password
 	 */
+	@JsonIgnore //prevents password from being shown in HTTP Response
 	public String getPassword() {
 		return password;
 	}
