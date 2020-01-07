@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 
 @Entity
@@ -30,6 +32,7 @@ public class ApplicationUser implements Serializable{
 	private long id;
 	
 	@Column(name = "password", nullable = false)
+	@JsonProperty(access = Access.WRITE_ONLY) //https://stackoverflow.com/questions/45834393/hiding-sensitive-information-in-response
 	private String password;
 	
 	@Column(name = "username", nullable = false)
