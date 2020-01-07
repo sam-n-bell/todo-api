@@ -30,7 +30,7 @@ import com.sam.todo.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity // lets Spring find and apply the class to the global Web Security
-//@EnableGlobalMethodSecurity(prePostEnabled = true) //
+@EnableGlobalMethodSecurity(prePostEnabled = true) //
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
