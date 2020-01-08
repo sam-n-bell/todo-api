@@ -70,7 +70,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		
 		Date expirationDate = (new Date(System.currentTimeMillis() + 846_000_000));
 		
-		
 		String token = JWT.create()
 				.withSubject(((User) auth.getPrincipal()).getUsername())
 				.withExpiresAt(expirationDate)
@@ -79,17 +78,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		User user = (User) auth.getPrincipal();
 		String username = user.getUsername();		
 		jwtService.saveJwt(username, token, expirationDate);
-		
-		
-//		ApplicationUser applicationUser = userRepository.findByUsername(((User) auth.getPrincipal()).getUsername());
-//		System.out.println(applicationUser.getId());
-//		User user = (User) auth.getPrincipal();
-//		System.out.println(user.getUsername());
-//		String usernameString = user.getUsername();
-//		System.out.println(usernameString);
-//		List<ApplicationUser> applicationUser = userRepository.findAll();
-//		System.out.println(applicationUser.getUsername());
-//		System.out.println(auth.getPrincipal());
 		
 		response.addHeader("Authorization", "Bearer " + token);
 		Cookie cookie = new Cookie("X-TODO-TOKEN", token);
