@@ -32,7 +32,10 @@ public class UserJWT implements Serializable{
 	private String jwt;
 	
 	@Column(name = "date_issued", nullable = false)
-	private Date date_issue;
+	private Date dateIssued;
+	
+	@Column(name="expiration_date", nullable = false)
+	private Date expirationDate;
 	
 	@Column(name = "expired", nullable = false)
 	@Type(type="yes_no")
@@ -41,6 +44,20 @@ public class UserJWT implements Serializable{
 	@ManyToOne //many tokens to one user
 	@JoinColumn(name="user_id")
 	private ApplicationUser applicationUser;
+
+	/**
+	 * @return the expirationDate
+	 */
+	public Date getExpirationDate() {
+		return this.expirationDate;
+	}
+
+	/**
+	 * @param expirationDate the expirationDate to set
+	 */
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
 
 	/**
 	 * @return the id
@@ -59,14 +76,14 @@ public class UserJWT implements Serializable{
 	/**
 	 * @return the user
 	 */
-	public ApplicationUser getUser() {
+	public ApplicationUser getApplicationUser() {
 		return this.applicationUser;
 	}
 
 	/**
 	 * @param user the user to set
 	 */
-	public void setUser(ApplicationUser user) {
+	public void setApplicationUser(ApplicationUser user) {
 		this.applicationUser = user;
 	}
 
@@ -85,17 +102,17 @@ public class UserJWT implements Serializable{
 	}
 
 	/**
-	 * @return the date_issue
+	 * @return the dateissued
 	 */
-	public Date getDate_issue() {
-		return date_issue;
+	public Date getDateIssued() {
+		return this.dateIssued;
 	}
 
 	/**
-	 * @param date_issue the date_issue to set
+	 * @param date_issue the dateIssued to set
 	 */
-	public void setDate_issue(Date date_issue) {
-		this.date_issue = date_issue;
+	public void setDateIssued(Date dateIssued) {
+		this.dateIssued = dateIssued;
 	}
 
 	/**
