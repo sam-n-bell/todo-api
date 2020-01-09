@@ -36,10 +36,6 @@ public class UserJWT implements Serializable{
 	
 	@Column(name="expiration_date", nullable = false)
 	private Date expirationDate;
-	
-	@Column(name = "expired", nullable = false)
-	@Type(type="yes_no")
-	private boolean expired;
 
 	@ManyToOne //many tokens to one user
 	@JoinColumn(name="user_id")
@@ -113,20 +109,6 @@ public class UserJWT implements Serializable{
 	 */
 	public void setDateIssued(Date dateIssued) {
 		this.dateIssued = dateIssued;
-	}
-
-	/**
-	 * @return the expired
-	 */
-	public boolean isExpired() {
-		return expired;
-	}
-
-	/**
-	 * @param expired the expired to set
-	 */
-	public void setExpired(boolean expired) {
-		this.expired = expired;
 	}
 
 	@Override

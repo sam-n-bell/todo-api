@@ -25,9 +25,18 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-		String header = request.getHeader("Authorization");
+
+		// because HEB didn't use this header name in their app im not using it here
+		//		String header = request.getHeader("Authorization");
+//		
+//		if (header == null || !header.startsWith("Bearer ")) {
+//			chain.doFilter(request, response);
+//			return;
+//		}
 		
-		if (header == null || !header.startsWith("Bearer ")) {
+		String header = request.getHeader("X-TODO-TOKEN");
+		
+		if (header == null) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -46,7 +55,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 * @return
 	 */
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
+		// because HEB didn't use this header name in their app im not using it here
+		String token = request.getHeader("X-TODO-TOKEN");
         if (token != null) {
             // parse the token.
             String user = JWT.require(Algorithm.HMAC512("javainuse".getBytes()))
