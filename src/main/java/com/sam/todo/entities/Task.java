@@ -12,6 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 @Table(name="tasks", schema = "todos" )
 public class Task implements Serializable{
@@ -27,16 +32,21 @@ public class Task implements Serializable{
 	
 	@ManyToOne //many tasks to one user
 	@JoinColumn(name="user_id")
+	@JsonProperty(access = Access.WRITE_ONLY) //https://stackoverflow.com/questions/45834393/hiding-sensitive-information-in-response
 	private ApplicationUser applicationUser;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false) //name is the name in the table itself
 	private long id;
+	
 	@Column(name = "description", nullable = false)
 	private String description;
+	
 	@Column(name = "due_date", nullable = false)
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date due_date;
+	
 	@Column(name = "priority", nullable = false)
 	private String priority;
 	
@@ -44,6 +54,7 @@ public class Task implements Serializable{
 	/**
 	 * @return the applicationUser
 	 */
+	@JsonIgnore
 	public ApplicationUser getApplicationUser() {
 		return applicationUser;
 	}
