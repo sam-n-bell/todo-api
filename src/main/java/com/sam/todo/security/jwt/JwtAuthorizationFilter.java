@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,14 +17,23 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.sam.todo.services.JwtService;
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
-
-	public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
-		super(authenticationManager);
-		// TODO Auto-generated constructor stub
-	}
 	
+	@Autowired
+	private JwtService jwtService;
+
+//	public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
+//		super(authenticationManager);
+//		// TODO Auto-generated constructor stub
+//	}
+	
+	public JwtAuthorizationFilter(AuthenticationManager authenticationManager, ApplicationContext applicationContext) {
+		super(authenticationManager);
+		this.jwtService = applicationContext.getBean(JwtService.class);
+	}
+
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
@@ -33,8 +44,9 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 //			chain.doFilter(request, response);
 //			return;
 //		}
-		
-		String header = request.getHeader("X-TODO-TOKEN");
+				
+//		String header = request.getHeader("X-TODO-TOKEN");
+		String header = getTokenHeader(request);
 		
 		if (header == null) {
 			chain.doFilter(request, response);
@@ -56,7 +68,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 	 */
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
 		// because HEB didn't use this header name in their app im not using it here
-		String token = request.getHeader("X-TODO-TOKEN");
+//		String token = request.getHeader("X-TODO-TOKEN");
+		String token = getTokenHeader(request);
         if (token != null) {
             // parse the token.
             String user = JWT.require(Algorithm.HMAC512("javainuse".getBytes()))
@@ -71,6 +84,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         return null;
     }
+	
+	private String getTokenHeader(HttpServletRequest request) {
+		return jwtService.getTokenFromHeader(request);
+	}
 	
 	
 

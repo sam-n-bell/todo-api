@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties.Jwt;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Autowired
 	private JwtService jwtService;
 	
+	
 	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, ApplicationContext applicationContext) {
 		this.authenticationManager = authenticationManager;
 		this.jwtService = applicationContext.getBean(JwtService.class);
@@ -62,27 +64,31 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
+        } 
     }
 	
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication auth) throws IOException, ServletException {
 		
-		Date expirationDate = (new Date(System.currentTimeMillis() + 846_000_000));
+//		Date expirationDate = (new Date(System.currentTimeMillis() + 846_000_000));
+//		
+//		String token = JWT.create()
+//				.withSubject(((User) auth.getPrincipal()).getUsername())
+//				.withExpiresAt(expirationDate)
+//				.sign(HMAC512("javainuse".getBytes()));
 		
-		String token = JWT.create()
-				.withSubject(((User) auth.getPrincipal()).getUsername())
-				.withExpiresAt(expirationDate)
-				.sign(HMAC512("javainuse".getBytes()));
+		String token = jwtService.createJwt(auth);
 		
 		User user = (User) auth.getPrincipal();
 		String username = user.getUsername();		
-		jwtService.saveJwt(username, token, expirationDate);
+//		jwtService.saveJwt(username, token, expirationDate);
+		
+		Cookie cookie = jwtService.getTokenCookie(token);
 		
 		response.addHeader("Authorization", "Bearer " + token);
-		Cookie cookie = new Cookie("X-TODO-TOKEN", token);
-        cookie.setDomain("localhost");
-        cookie.setPath("/");
+//		Cookie cookie = new Cookie("X-TODO-TOKEN", token);
+//        cookie.setDomain("localhost");
+//        cookie.setPath("/");
         response.addCookie(cookie);
 				
 	}

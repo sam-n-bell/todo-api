@@ -50,8 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager(), getApplicationContext()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+                // https://stackoverflow.com/a/48107721/7858114
+                // lets me use services and repos in the filters
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), getApplicationContext())) 
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), getApplicationContext()))
+//                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
                 // this disables session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
